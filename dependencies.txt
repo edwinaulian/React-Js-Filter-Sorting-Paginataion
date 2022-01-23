@@ -1,0 +1,9 @@
+- npm install mdb-react-ui-kit
+- npm install axios
+- npm install -g json-server or npm install json-server@v0.12.2
+- npm install web-vitals@v2.1.2 or npm i web-vitals
+
+
+//
+npm start
+npm run server 

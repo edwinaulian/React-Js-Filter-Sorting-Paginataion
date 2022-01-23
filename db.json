@@ -1,0 +1,76 @@
+{
+     "users" : [
+         {
+             "name": "Edwin",
+             "email": "edwinauliano@gmail.com",
+             "phone": "089693517968",
+             "address": "INA",
+             "id": "1",
+             "status": "Active"
+         },
+         {
+            "name": "Ariel",
+            "email": "arielnoah@gmail.com",
+            "phone": "089637372832",
+            "address": "INA",
+            "id": "2",
+            "status": "Active"
+        },
+        {
+            "name": "Rani",
+            "email": "maharani@gmail.com",
+            "phone": "0896328328232",
+            "address": "INA",
+            "id": "3",
+            "status": "Inactive"
+        },
+        {
+            "name": "Ica",
+            "email": "icana@gmail.com",
+            "phone": "089732732832",
+            "address": "INA",
+            "id": "4",
+            "status": "Active"
+        },
+        {
+            "name": "Danu",
+            "email": "danuo@gmail.com",
+            "phone": "08732329733",
+            "address": "INA",
+            "id": "5",
+            "status": "Inactive"
+        },
+        {
+            "name": "Rahma",
+            "email": "rahmana@gmail.com",
+            "phone": "0875327328",
+            "address": "INA",
+            "id": "6",
+            "status": "Active"
+        },
+        {
+            "name": "Anya",
+            "email": "anya@gmail.com",
+            "phone": "087873293232",
+            "address": "INA",
+            "id": "7",
+            "status": "Active"
+        },
+        {
+            "name": "Ratu",
+            "email": "ratuTaniay@gmail.com",
+            "phone": "0875327328",
+            "address": "INA",
+            "id": "8",
+            "status": "Active"
+        },
+        {
+            "name": "Dinda",
+            "email": "dinda@gmail.com",
+            "phone": "0875327328",
+            "address": "INA",
+            "id": "9",
+            "status": "Inactive"
+        }
+     ]
+}
