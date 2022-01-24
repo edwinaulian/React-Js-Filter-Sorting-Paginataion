@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { MDBPagination, MDBPaginationItem, MDBPaginationLink, MDBTable, MDBTableHead, MDBTableBody, MDBRow, MDBCol, MDBContainer, MDBBtn, MDBBtnGroup } from "mdb-react-ui-kit";
+import { MDBPagination, MDBPaginationItem, MDBPaginationLink, MDBContainer, MDBBtn } from "mdb-react-ui-kit";
+import Search from './Search';
+import Table from './Table';
+import SortandFilter from './SortandFilter';
+
 const axios = require('axios');
 
 export default function App() {
@@ -15,7 +19,16 @@ export default function App() {
   const sortOptions = ["name", "email", "phone", "address", "status"];
 
   useEffect(() => {
-    loadUserData(0, 4, 0);
+    const loadUserDataInit = async (start, end, increase) => {
+      return await axios
+        .get(`http://localhost:5000/users?_start=${start}&_end=${end}`)
+        .then((res) => {
+          setData(res.data);
+          setcurrentPage(c => c + increase);
+        })
+        .catch((error) => console.log(error));
+    }
+    loadUserDataInit(0, 4, 0);
   }, []);
 
   const loadUserData = async (start, end, increase, optType = null, filterOrSortValue) => {
@@ -71,6 +84,10 @@ export default function App() {
   const handleSearch = async (e) => {
     e.preventDefault();
     loadUserData(0, 4, 0, "search");
+  }
+
+  const handleValueInput = async (event) => {
+    setValue(event.target.value)
   }
 
   const handleSort = async (e) => {
@@ -129,86 +146,10 @@ export default function App() {
 
   return (
     <MDBContainer>
-      <form style={{
-        margin: "auto",
-        padding: "15px",
-        maxWidth: "400px",
-        alignContent: "center",
-      }}
-        className="d-flex input-group w-auto"
-        onSubmit={handleSearch}
-      >
-        <input type="text"
-          value={value}
-          onChange={(event) => setValue(event.target.value)}
-          className="form-control" placeholder='input something'></input>
-
-        <MDBBtn type="submit" color='dark'>Search</MDBBtn>
-        <MDBBtn className="mx-2" color='info' onClick={() => handleReset()}>Reset</MDBBtn>
-      </form>
-      <div style={{ marginTop: "20px" }}>
-        <h3 className="text-center mb-0">List Users</h3>
-        <MDBRow>
-          <MDBCol size="12">
-            <MDBTable>
-              <MDBTableHead dark>
-                <tr>
-                  <th scope="col">No.</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Phone</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </MDBTableHead>
-              {data.length === 0 ? (
-                <MDBTableBody className="align-center mb-0">
-                  <tr>
-                    <td colSpan={8} className="text-center mb-0">No Data Found</td>
-                  </tr>
-                </MDBTableBody>
-              ) : (data.map((item, index) => (<MDBTableBody key={index}>
-                <tr>
-                  <th scope="row">{index + 1}</th>
-                  <td>{item.name}</td>
-                  <td>{item.email}</td>
-                  <td>{item.phone}</td>
-                  <td>{item.address}</td>
-                  <td>{item.status}</td>
-                </tr>
-              </MDBTableBody>)))}
-            </MDBTable>
-          </MDBCol>
-        </MDBRow>
-        <div style={{
-          margin: "auto",
-          padding: "15px",
-          maxWidth: "250px",
-          alignContent: "center",
-        }}>
-          {renderPagination()}
-        </div>
-      </div>
+      <Search value={value} handleValueInput={handleValueInput} handleSearch={handleSearch} handleReset={handleReset}></Search>
+      <Table data={data} renderPagination={renderPagination}></Table>
       {data.length > 0 && (
-        <MDBRow>
-          <MDBCol size="8">Sort By:
-            <select
-              onChange={handleSort}
-              value={sortValue}
-              style={{ width: '50%', borderRadius: '2px' }}
-            >
-              <option>Please select value</option>
-              {sortOptions.map((item, index) => (
-                <option value={item} key={index}>{item}</option>
-              ))}
-            </select>
-          </MDBCol>
-          <MDBCol size="4">Filter By Status:</MDBCol>
-          <MDBBtnGroup style={{ marginTop: '-3%', width: '20%', marginLeft: '67%' }}>
-            <MDBBtn color="success" onClick={() => handleActiveFilter("Active")}>Active</MDBBtn>
-            <MDBBtn color="danger" onClick={() => handleActiveFilter("Inactive")}>Inactive</MDBBtn>
-          </MDBBtnGroup>
-        </MDBRow>
+        <SortandFilter sortValue={sortValue} sortOptions={sortOptions} handleSort={handleSort} handleActiveFilter={handleActiveFilter}></SortandFilter>
       )}
     </MDBContainer>
   );
